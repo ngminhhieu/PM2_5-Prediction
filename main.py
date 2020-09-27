@@ -27,7 +27,7 @@ def seed():
 
 
 if __name__ == '__main__':
-    seed()
+    # seed()
     sys.path.append(os.getcwd())
     parser = argparse.ArgumentParser()
     parser.add_argument('--use_cpu_only',
@@ -59,11 +59,16 @@ if __name__ == '__main__':
                         type=int,
                         help='Number of generation')
     parser.add_argument('--select_best_only',
-                        default=True,
-                        type=bool,
-                        help='Number of generation')
+                        default="true",
+                        type=str,
+                        help='Select best individuals only')
     args = parser.parse_args()
+    flag_select_best_only=True
 
+    if args.select_best_only=="true" or args.select_best_only=="True":
+        flag_select_best_only=True
+    else:
+        flag_select_best_only=False
     # load config for seq2seq model
     if args.config_file != False:
         with open(args.config_file) as f:
@@ -72,13 +77,13 @@ if __name__ == '__main__':
     if args.mode == 'ga_seq2seq':
         log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
-            str(args.select_best_only))
+            str(flag_select_best_only))
         evo = evolution(total_feature=len(constant.hanoi_features),
                         pc=args.pc,
                         pm=args.pm,
                         population_size=args.population,
                         max_gen=args.gen,
-                        select_best_only=args.select_best_only,
+                        select_best_only=flag_select_best_only,
                         log_path=log_path)
         fitness = [evo["gen"], evo["fitness"]]
         utils_ga.write_log(path=log_path,

@@ -29,6 +29,7 @@ do
 done
 
 for i in "${index[@]}"
+do
     tmux send-keys -t real "tmux send-keys -t ${PC_WINDOW[$i]} 'python main.py --pc=${pc[$i]} --pm=0.2 --population=30' ENTER" ENTER
 done
 
@@ -36,8 +37,8 @@ tmux send-keys -t real "tmux new-window -n best_only_false " ENTER
 tmux send-keys -t real "tmux new-window -n best_only_true " ENTER
 sleep 1
 
-tmux send-keys -t real "tmux send-keys -t best_only_false 'python main.py --pc=0.8 --pm=0.2 --population=30 --select_best_only=false' ENTER" ENTER
-tmux send-keys -t real "tmux send-keys -t best_only_true 'python main.py --pc=0.8 --pm=0.2 --population=30 --select_best_only=true' ENTER" ENTER
+tmux send-keys -t real "tmux send-keys -t best_only_false 'python main.py --pc=0.8 --pm=0.2 --population=30 --select_best_only=False' ENTER" ENTER
+tmux send-keys -t real "tmux send-keys -t best_only_true 'python main.py --pc=0.8 --pm=0.2 --population=30 --select_best_only=True' ENTER" ENTER
 
 # End of outer loop.
 exit 0
