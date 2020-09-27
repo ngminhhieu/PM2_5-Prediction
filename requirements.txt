@@ -3,6 +3,7 @@ numpy==1.17.3
 pandas
 sklearn
 matplotlib
-keras
+keras=2.3.1
 pyyaml
+tqdm
 tensorflow==1.13.1
