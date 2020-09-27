@@ -7,3 +7,5 @@ keras=2.3.1
 pyyaml
 tqdm
 tensorflow==1.13.1
+pydot # to plot model using keras
+# sudo apt install python-pydot python-pydot-ng graphviz
