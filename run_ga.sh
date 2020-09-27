@@ -1,7 +1,10 @@
 #!/bin/bash
 
 git clone https://github.com/ngminhhieu/PM2_5-Prediction
-sleep 5
+while [ ! -d "PM2_5-Prediction" ]
+do
+  sleep 2 # or less like 0.2
+done
 cd "PM2_5-Prediction"
 tmux new-session -d -s real
 POP_WINDOW=( "pop_40" "pop_50" "pop_60" "pop_70" )
