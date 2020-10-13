@@ -23,6 +23,6 @@ test:
   test_monthly: false
 train:
   dropout: 0
-  epochs: 300
+  epochs: 10
   optimizer: adam
   patience: 15
