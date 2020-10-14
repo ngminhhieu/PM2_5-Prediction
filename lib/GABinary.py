@@ -148,9 +148,12 @@ def evolution(total_feature,
         indi = individual(total_feature=total_feature)
         population.append(indi)
         first_training_time += indi["time"]
+    new_pop = sorted(population, key=itemgetter("fitness"), reverse=False)
     utils_ga.write_log(path=ga_log_path,
                        filename="fitness_gen.csv",
-                       error=[start_time, first_training_time])
+                       error=[start_time, population[0]["gen"] population[0]["fitness"], first_training_time])
+    
+
     t = 1
     while t <= max_gen:
         training_time_gen = 0
