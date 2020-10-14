@@ -174,14 +174,16 @@ def evolution(total_feature,
 
         population = selection(population + temp_population, population_size,
                                select_best_only)
+
+        pop_fitness = population[0]["fitness"]
         fitness = [
-            t, population[0]["gen"], population[0]["fitness"],
+            t, population[0]["gen"], pop_fitness,
             training_time_gen
         ]
         utils_ga.write_log(path=ga_log_path,
                            filename="fitness_gen.csv",
                            error=fitness)
-        print("t =", t, "fitness =", population[0]["fitness"], "time =",
+        print("t =", t, "fitness =", pop_fitness, "time =",
               training_time_gen)
         t = t + 1
-    return population[0]
+    return pop_fitness

@@ -81,14 +81,15 @@ if __name__ == '__main__':
         log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
             str(flag_select_best_only))
-        evo = evolution(total_feature=len(constant.hanoi_features),
+        last_pop_fitness = evolution(total_feature=len(constant.hanoi_features),
                         pc=args.pc,
                         pm=args.pm,
                         population_size=args.population,
                         max_gen=args.gen,
                         select_best_only=flag_select_best_only,
                         log_path=log_path)
-        fitness = [evo["gen"], evo["fitness"]]
+        print(last_pop_fitness)
+        # fitness = [evo["gen"], evo["fitness"]]
         # utils_ga.write_log(path=log_path,
         #                    filename="GA/result_binary.csv",
         #                    error=fitness)
