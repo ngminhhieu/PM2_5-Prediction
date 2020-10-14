@@ -151,8 +151,8 @@ def evolution(total_feature,
     utils_ga.write_log(path=ga_log_path,
                        filename="fitness_gen.csv",
                        error=[start_time, first_training_time])
-    t = 0
-    while t < max_gen:
+    t = 1
+    while t <= max_gen:
         training_time_gen = 0
         temp_population = []
         for i, _ in enumerate(population):
