@@ -18,7 +18,7 @@ import numpy as np
 from datetime import datetime
 
 target_feature = ['PM2.5']
-dataset = 'data/csv/hanoi_data.csv'
+dataset = 'data/csv/hanoi_data_full.csv'
 # output_dir = 'data/npz/hanoi/ga_hanoi.npz'
 # config_path_ga = 'config/hanoi/ga_hanoi.yaml'
 output_dir_npz = ''
