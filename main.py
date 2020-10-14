@@ -86,9 +86,9 @@ if __name__ == '__main__':
                         select_best_only=flag_select_best_only,
                         log_path=log_path)
         fitness = [evo["gen"], evo["fitness"]]
-        utils_ga.write_log(path=log_path,
-                           filename="result_binary.csv",
-                           error=fitness)
+        # utils_ga.write_log(path=log_path,
+        #                    filename="GA/result_binary.csv",
+        #                    error=fitness)
     elif args.mode == 'seq2seq_train':
         model = EncoderDecoder(is_training=True, **config)
         model.train()
