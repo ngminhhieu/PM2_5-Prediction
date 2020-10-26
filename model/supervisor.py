@@ -7,7 +7,7 @@ import yaml
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from tqdm import tqdm
 from lib import utils_model
-from keras.utils import plot_model
+# from keras.utils import plot_model
 from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
@@ -257,8 +257,8 @@ class EncoderDecoder():
         plt.legend()
         plt.close()
 
-    def plot_models(self):
-        plot_model(model=self.model, to_file=self._log_dir + '/model.png', show_shapes=True)
+    # def plot_models(self):
+    #     plot_model(model=self.model, to_file=self._log_dir + '/model.png', show_shapes=True)
 
 
     def plot_series(self):

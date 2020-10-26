@@ -1,6 +1,6 @@
 from keras.layers import Dense, Input, GRU
 from keras.models import Model
-from keras.utils import plot_model
+# from keras.utils import plot_model
 
 def gru_ed_model_construction(input_dim, output_dim, rnn_units, dropout, optimizer, log_dir, is_training=True):
         # Model
@@ -35,7 +35,7 @@ def gru_ed_model_construction(input_dim, output_dim, rnn_units, dropout, optimiz
 
             decoder_model = Model([decoder_inputs] + decoder_state_input, [decoder_outputs] + decoder_states)
 
-            plot_model(model=encoder_model, to_file=log_dir + '/encoder.png', show_shapes=True)
-            plot_model(model=decoder_model, to_file=log_dir + '/decoder.png', show_shapes=True)
+            # plot_model(model=encoder_model, to_file=log_dir + '/encoder.png', show_shapes=True)
+            # plot_model(model=decoder_model, to_file=log_dir + '/decoder.png', show_shapes=True)
 
             return model, encoder_model, decoder_model

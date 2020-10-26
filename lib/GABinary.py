@@ -140,7 +140,6 @@ def evolution(total_feature,
     config_path_ga = 'config/hanoi/{}.yaml'.format(tmp_path)
     seq2seq_path = log_path + "seq2seq/"
     ga_log_path = log_path + "GA/"
-
     population = []
     first_training_time = 0
     start_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -163,18 +162,18 @@ def evolution(total_feature,
                 j = random.randint(0, population_size - 1)
                 while j == i:
                     j = random.randint(0, population_size - 1)
-                f_child, m_child = crossover(population[i],
-                                             population[j],
+                f_child, m_child = crossover(population[i].copy(),
+                                             population[j].copy(),
                                              total_feature=total_feature)
                 temp_population.append(f_child)
                 temp_population.append(m_child)
                 training_time_gen += f_child["time"] + m_child["time"]
             if r < pm:
-                off = mutation(population[i], total_feature=total_feature)
+                off = mutation(population[i].copy(), total_feature=total_feature)
                 temp_population.append(off)
                 training_time_gen += off["time"]
 
-        population = selection(population + temp_population, population_size,
+        population = selection(population.copy() + temp_population, population_size,
                                select_best_only)
 
         pop_fitness = population[0]["fitness"]
