@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import csv
+import yaml
 
 def write_log(path, filename, error, input_feature = []):
     now = datetime.now()
@@ -13,3 +14,8 @@ def write_log(path, filename, error, input_feature = []):
         writer = csv.writer(file)
         writer.writerow(error)
         writer.writerow(input_feature)
+
+def load_config(config_path):
+    with open(config_path) as f:
+        config = yaml.load(f)
+    return config

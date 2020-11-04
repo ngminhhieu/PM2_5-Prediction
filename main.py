@@ -5,14 +5,14 @@ import numpy as np
 import yaml
 import random as rn
 from model.supervisor import EncoderDecoder
-from lib.GABinary import evolution
+from lib.GABinary import GA
 from lib import utils_ga
 from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
+session = tf.compat.v1.Session(config=config)
 
 
 def seed():
@@ -26,7 +26,7 @@ def seed():
     # in the TensorFlow backend have a well-defined initial state.
     # For further details, see:
     # https://www.tensorflow.org/api_docs/python/tf/set_random_seed
-    tf.set_random_seed(1234)
+    tf.compat.v1.set_random_seed(1234)
 
 
 if __name__ == '__main__':
@@ -81,7 +81,8 @@ if __name__ == '__main__':
         log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
             str(flag_select_best_only))
-        last_pop_fitness = evolution(total_feature=len(constant.hanoi_features),
+        ga = GA(percentage_split=15)
+        last_pop_fitness = ga.evolution(total_feature=len(constant.hanoi_features),
                         pc=args.pc,
                         pm=args.pm,
                         population_size=args.population,
@@ -89,10 +90,10 @@ if __name__ == '__main__':
                         select_best_only=flag_select_best_only,
                         log_path=log_path)
         print(last_pop_fitness)
-        # fitness = [evo["gen"], evo["fitness"]]
-        # utils_ga.write_log(path=log_path,
-        #                    filename="GA/result_binary.csv",
-        #                    error=fitness)
+        fitness = [evo["gen"], evo["fitness"]]
+        utils_ga.write_log(path=log_path,
+                           filename="GA/result_binary.csv",
+                           error=fitness)
     elif args.mode == 'seq2seq_train':
         model = EncoderDecoder(is_training=True, **config)
         model.train()
