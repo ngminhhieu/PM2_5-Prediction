@@ -77,6 +77,10 @@ if __name__ == '__main__':
                         type=str2bool,
                         help='Select best individuals only')
     parser.add_argument('--percentage_split', default=10, type=int, help='')
+    parser.add_argument('--percentage_back_test',
+                        default=10,
+                        type=int,
+                        help='')
     parser.add_argument('--split_training_data',
                         default=True,
                         type=str2bool,
@@ -90,9 +94,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.mode == 'ga_seq2seq':
-        log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-split_{}-fixed_{}-shuffle_{}/".format(
+        log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-percensplit_{}-percenbacktest_{}-split_{}-fixed_{}-shuffle_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
-            str(args.select_best_only), str(args.split_training_data),
+            str(args.select_best_only), str(args.percentage_split),
+            str(args.percentage_back_test), str(args.split_training_data),
             str(args.fixed_splitted_data), str(args.shuffle_gen))
         ga = GA(args.percentage_split, args.split_training_data,
                 args.fixed_splitted_data, args.shuffle_gen)

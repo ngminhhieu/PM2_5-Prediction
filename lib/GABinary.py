@@ -21,10 +21,12 @@ from datetime import datetime
 class GA(object):
     def __init__(self,
                  percentage_split=10,
+                 percentage_back_test=0,
                  split_training_data=True,
                  fixed_splitted_data=False,
                  shuffle_gen=False):
         self.percentage_split = percentage_split
+        self.percentage_back_test = percentage_back_test
         self.target_feature = ['PM2.5']
         self.output_dir_npz = ''
         self.config_path_ga = ''
@@ -224,9 +226,10 @@ class GA(object):
                   max_gen=1000,
                   select_best_only=True,
                   log_path="log/GA/"):
-        tmp_path = "ga_hanoi_pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-split_{}-fixed_{}-shuffle_{}".format(
+        tmp_path = "ga_hanoi_pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-percensplit_{}-percenbacktest_{}-split_{}-fixed_{}-shuffle_{}".format(
             str(pc), str(pm), str(population_size), str(max_gen),
-            str(select_best_only), str(self.split_training_data),
+            str(select_best_only), str(self.percentage_split),
+            str(self.percentage_back_test), str(self.split_training_data),
             str(self.fixed_splitted_data), str(self.shuffle_gen))
         self.output_dir_npz = 'data/npz/hanoi/{}.npz'.format(tmp_path)
         self.config_path_ga = 'config/hanoi/{}.yaml'.format(tmp_path)
@@ -270,6 +273,18 @@ class GA(object):
                                         random_number_dataset)
                     temp_population.append(off)
                     training_time_gen += off["time"]
+
+            # Giu lai x% các cá thể cũ để train lại với bộ dataset mới
+            for _ in range(self.percentage_back_test / 100 * population_size):
+                random_position = random.randint(0, population_size - 1)
+                if self.shuffle_gen == False:
+                    population[random_position]['fitness'] = self.fitness(
+                        population[random_position]["gen"],
+                        random_number_dataset)
+                else:
+                    population[random_position][
+                        'fitness'] = self.fitness_shuffle_gen(
+                            population[random_position]["gen"])
 
             population = selection(population.copy() + temp_population,
                                    population_size, select_best_only)
