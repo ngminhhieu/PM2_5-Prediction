@@ -29,6 +29,17 @@ def seed():
     tf.compat.v1.set_random_seed(1234)
 
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
 if __name__ == '__main__':
     seed()
     sys.path.append(os.getcwd())
@@ -62,33 +73,37 @@ if __name__ == '__main__':
                         type=int,
                         help='Number of generation')
     parser.add_argument('--select_best_only',
-                        default="true",
-                        type=str,
+                        default=True,
+                        type=str2bool,
                         help='Select best individuals only')
-    args = parser.parse_args()
-    flag_select_best_only=True
+    parser.add_argument('--percentage_split', default=10, type=int, help='')
+    parser.add_argument('--split_training_data',
+                        default=True,
+                        type=str2bool,
+                        help='')
+    parser.add_argument('--fixed_splitted_data',
+                        default=False,
+                        type=str2bool,
+                        help='')
+    parser.add_argument('--shuffle_gen', default=False, type=str2bool, help='')
 
-    if args.select_best_only=="true" or args.select_best_only=="True":
-        flag_select_best_only=True
-    else:
-        flag_select_best_only=False
-    # load config for seq2seq model
-    if args.config_file != False:
-        with open(args.config_file) as f:
-            config = yaml.load(f)
+    args = parser.parse_args()
 
     if args.mode == 'ga_seq2seq':
-        log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}/".format(
+        log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-split_{}-fixed_{}-shuffle_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
-            str(flag_select_best_only))
-        ga = GA(percentage_split=15)
-        last_pop_fitness = ga.evolution(total_feature=len(constant.hanoi_features),
-                        pc=args.pc,
-                        pm=args.pm,
-                        population_size=args.population,
-                        max_gen=args.gen,
-                        select_best_only=flag_select_best_only,
-                        log_path=log_path)
+            str(args.select_best_only), str(args.split_training_data),
+            str(args.fixed_splitted_data), str(args.shuffle_gen))
+        ga = GA(args.percentage_split, args.split_training_data,
+                args.fixed_splitted_data, args.shuffle_gen)
+        last_pop_fitness = ga.evolution(total_feature=len(
+            constant.hanoi_features),
+                                        pc=args.pc,
+                                        pm=args.pm,
+                                        population_size=args.population,
+                                        max_gen=args.gen,
+                                        select_best_only=args.select_best_only,
+                                        log_path=log_path)
         print(last_pop_fitness)
         fitness = [evo["gen"], evo["fitness"]]
         utils_ga.write_log(path=log_path,
