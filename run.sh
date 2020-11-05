@@ -16,6 +16,7 @@ tmux new-session -d -s real
 FIXED_SHUFFLE_WINDOW=( "shuffle_true-backtest_0" "shuffle_true-backtest_10" "shuffle_true-backtest_20" "shuffle_true-backtest_40" "shuffle_true-backtest_60" "shuffle_true-backtest_80" "shuffle_true-backtest_100")
 index=(0 1 2 3 4 5 6)
 percentage_back_test=(0 10 20 40 60 80 100)
+sleep 1
 for i in "${index[@]}"
 do
     tmux send-keys -t real "tmux new-window -n ${FIXED_SHUFFLE_WINDOW[$i]} " ENTER
@@ -27,7 +28,6 @@ do
 done
 
 FIXED_WINDOW=( "shuffle_false-backtest_0" "shuffle_false-backtest_10" "shuffle_false-backtest_20" "shuffle_false-backtest_40" "shuffle_false-backtest_60" "shuffle_false-backtest_80" "shuffle_false-backtest_100")
-index=(0 1 2 3 4 5 6)
 percentage_back_test=(0 10 20 40 60 80 100)
 for i in "${index[@]}"
 do
