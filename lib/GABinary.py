@@ -275,12 +275,8 @@ class GA(object):
                     training_time_gen += off["time"]
 
             # Giu lai x% các cá thể cũ để train lại với bộ dataset mới
-            for _ in range(0, 
+            for _ in range(
                     int(self.percentage_back_test / 100 * population_size)):
-                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
-                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
-                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
-                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
                 random_position = random.randint(0, population_size - 1)
                 if self.shuffle_gen == False:
                     population[random_position]['fitness'], population[
@@ -293,9 +289,6 @@ class GA(object):
                             population[random_position]["gen"])
                 training_time_gen += population[random_position]['time']
 
-
-            print('POPULATION: ', population)
-            print('TEMP POPULATION: ', temp_population)
             population = self.selection(population.copy() + temp_population,
                                         population_size, select_best_only)
 
