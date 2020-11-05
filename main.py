@@ -99,16 +99,18 @@ if __name__ == '__main__':
             str(args.select_best_only), str(args.percentage_split),
             str(args.percentage_back_test), str(args.split_training_data),
             str(args.fixed_splitted_data), str(args.shuffle_gen))
-        ga = GA(args.percentage_split, args.percentage_back_test, args.split_training_data,
-                args.fixed_splitted_data, args.shuffle_gen)
-        last_pop_fitness = ga.evolution(total_feature=len(
-            constant.hanoi_features),
-                                        pc=args.pc,
-                                        pm=args.pm,
-                                        population_size=args.population,
-                                        max_gen=args.gen,
-                                        select_best_only=args.select_best_only,
-                                        log_path=log_path)
+        
+        with tf.device('/CPU:0'):
+            ga = GA(args.percentage_split, args.percentage_back_test, args.split_training_data,
+                    args.fixed_splitted_data, args.shuffle_gen)
+            last_pop_fitness = ga.evolution(total_feature=len(
+                constant.hanoi_features),
+                                            pc=args.pc,
+                                            pm=args.pm,
+                                            population_size=args.population,
+                                            max_gen=args.gen,
+                                            select_best_only=args.select_best_only,
+                                            log_path=log_path)
         print(last_pop_fitness)
     elif args.mode == 'seq2seq_train':
         model = EncoderDecoder(is_training=True, **config)
