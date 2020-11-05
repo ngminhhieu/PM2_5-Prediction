@@ -21,7 +21,7 @@ def seed():
     np.random.seed(2)
     # The below is necessary for starting core Python generated random numbers
     # in a well-defined state.
-    rn.seed(12345)
+    # rn.seed(12345)
     # The below tf.set_random_seed() will make random number generation
     # in the TensorFlow backend have a well-defined initial state.
     # For further details, see:
@@ -78,7 +78,7 @@ if __name__ == '__main__':
                         help='Select best individuals only')
     parser.add_argument('--percentage_split', default=10, type=int, help='')
     parser.add_argument('--percentage_back_test',
-                        default=10,
+                        default=0,
                         type=int,
                         help='')
     parser.add_argument('--split_training_data',
@@ -86,10 +86,10 @@ if __name__ == '__main__':
                         type=str2bool,
                         help='')
     parser.add_argument('--fixed_splitted_data',
-                        default=False,
+                        default=True,
                         type=str2bool,
                         help='')
-    parser.add_argument('--shuffle_gen', default=False, type=str2bool, help='')
+    parser.add_argument('--shuffle_gen', default=True, type=str2bool, help='')
 
     args = parser.parse_args()
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
             str(args.select_best_only), str(args.percentage_split),
             str(args.percentage_back_test), str(args.split_training_data),
             str(args.fixed_splitted_data), str(args.shuffle_gen))
-        ga = GA(args.percentage_split, args.split_training_data,
+        ga = GA(args.percentage_split, args.percentage_back_test, args.split_training_data,
                 args.fixed_splitted_data, args.shuffle_gen)
         last_pop_fitness = ga.evolution(total_feature=len(
             constant.hanoi_features),
@@ -110,10 +110,6 @@ if __name__ == '__main__':
                                         select_best_only=args.select_best_only,
                                         log_path=log_path)
         print(last_pop_fitness)
-        fitness = [evo["gen"], evo["fitness"]]
-        utils_ga.write_log(path=log_path,
-                           filename="GA/result_binary.csv",
-                           error=fitness)
     elif args.mode == 'seq2seq_train':
         model = EncoderDecoder(is_training=True, **config)
         model.train()

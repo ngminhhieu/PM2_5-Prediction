@@ -19,12 +19,8 @@ from datetime import datetime
 
 
 class GA(object):
-    def __init__(self,
-                 percentage_split=10,
-                 percentage_back_test=0,
-                 split_training_data=True,
-                 fixed_splitted_data=False,
-                 shuffle_gen=False):
+    def __init__(self, percentage_split, percentage_back_test,
+                 split_training_data, fixed_splitted_data, shuffle_gen):
         self.percentage_split = percentage_split
         self.percentage_back_test = percentage_back_test
         self.target_feature = ['PM2.5']
@@ -76,9 +72,9 @@ class GA(object):
                     1, self.number_of_minor_dataset)
                 preprocessing_data.generate_npz(
                     input_features + self.target_feature,
-                    'data/csv/ga/dataset_{}.csv'.format(random_number_dataset),
-                    self.output_dir_npz, self.config_path_ga,
-                    self.seq2seq_path)
+                    'data/csv/ga/dataset_{}.csv'.format(
+                        str(random_number_dataset)), self.output_dir_npz,
+                    self.config_path_ga, self.seq2seq_path)
             else:
                 pivot = int(self.percentage_split * len(dataset) / 100)
                 random_start_point = random.randint(0, len(dataset) - pivot)
@@ -184,10 +180,10 @@ class GA(object):
         child2["gen"][start:end] = father["gen"][start:end]
         child2["gen"][end:] = mother["gen"][end:]
         if self.shuffle_gen == False:
-            child2["fitness"], child1["time"] = self.fitness(
+            child2["fitness"], child2["time"] = self.fitness(
                 child2["gen"], random_number_dataset)
         else:
-            child2["fitness"], child1["time"] = self.fitness_shuffle_gen(
+            child2["fitness"], child2["time"] = self.fitness_shuffle_gen(
                 child2["gen"])
         return child1, child2
 
@@ -202,6 +198,9 @@ class GA(object):
         if self.shuffle_gen == False:
             child["fitness"], child["time"] = self.fitness(
                 child["gen"], random_number_dataset)
+        else:
+            child["fitness"], child["time"] = self.fitness_shuffle_gen(
+                child["gen"])
         return child
 
     def selection(self, popu, population_size, best_only=True):
@@ -236,6 +235,7 @@ class GA(object):
         self.seq2seq_path = log_path + "seq2seq/"
         ga_log_path = log_path + "GA/"
         population = []
+        total_time_training = 0
         first_training_time = 0
         start_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         for _ in range(population_size):
@@ -249,10 +249,10 @@ class GA(object):
                                start_time, population[0]["gen"],
                                population[0]["fitness"], first_training_time
                            ])
+        total_time_training += first_training_time
         while self.gen <= max_gen:
-            if self.shuffle_gen == False:
-                random_number_dataset = random.randint(
-                    1, self.number_of_minor_dataset)
+            random_number_dataset = random.randint(
+                1, self.number_of_minor_dataset)
             training_time_gen = 0
             temp_population = []
             for i, _ in enumerate(population):
@@ -275,28 +275,43 @@ class GA(object):
                     training_time_gen += off["time"]
 
             # Giu lai x% các cá thể cũ để train lại với bộ dataset mới
-            for _ in range(self.percentage_back_test / 100 * population_size):
+            for _ in range(0, 
+                    int(self.percentage_back_test / 100 * population_size)):
+                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
+                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
+                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
+                print("Tessttt HERRREEEEEEEEEEEEEEEEEEEEEEEE")
                 random_position = random.randint(0, population_size - 1)
                 if self.shuffle_gen == False:
-                    population[random_position]['fitness'] = self.fitness(
-                        population[random_position]["gen"],
-                        random_number_dataset)
+                    population[random_position]['fitness'], population[
+                        random_position]['time'] = self.fitness(
+                            population[random_position]["gen"],
+                            random_number_dataset)
                 else:
-                    population[random_position][
-                        'fitness'] = self.fitness_shuffle_gen(
+                    population[random_position]['fitness'], population[
+                        random_position]['time'] = self.fitness_shuffle_gen(
                             population[random_position]["gen"])
+                training_time_gen += population[random_position]['time']
 
-            population = selection(population.copy() + temp_population,
-                                   population_size, select_best_only)
+
+            print('POPULATION: ', population)
+            print('TEMP POPULATION: ', temp_population)
+            population = self.selection(population.copy() + temp_population,
+                                        population_size, select_best_only)
 
             pop_fitness = population[0]["fitness"]
-            fitness = [
+            log_gen = [
                 self.gen, population[0]["gen"], pop_fitness, training_time_gen
             ]
             utils_ga.write_log(path=ga_log_path,
                                filename="fitness_gen.csv",
-                               error=fitness)
+                               error=log_gen)
             print("gen =", self.gen, "fitness =", pop_fitness, "time =",
                   training_time_gen)
             self.gen = self.gen + 1
+            total_time_training += training_time_gen
+
+        utils_ga.write_log(path=ga_log_path,
+                           filename="fitness_gen.csv",
+                           error=[total_time_training])
         return pop_fitness
