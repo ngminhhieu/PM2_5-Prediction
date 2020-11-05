@@ -13,6 +13,7 @@ tqdm = "*"
 tensorflow = "==2.1.0"
 Keras = "==2.3.1"
 PyYAML = "*"
+h5py = "==2.10.0"
 
 [requires]
 python_version = "3.6"
