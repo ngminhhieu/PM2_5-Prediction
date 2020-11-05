@@ -10,6 +10,7 @@ done
 fi
 rm -rf "PM2_5-Prediction/log/*"
 cd "PM2_5-Prediction"
+
 git checkout ga
 tmux new-session -d -s real
 
