@@ -10,7 +10,7 @@ from lib import utils_ga
 from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
-config = tf.compat.v1.ConfigProto()
+config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
 config.gpu_options.allow_growth = True
 session = tf.compat.v1.Session(config=config)
 
@@ -77,10 +77,7 @@ if __name__ == '__main__':
                         type=str2bool,
                         help='Select best individuals only')
     parser.add_argument('--percentage_split', default=10, type=int, help='')
-    parser.add_argument('--percentage_back_test',
-                        default=0,
-                        type=int,
-                        help='')
+    parser.add_argument('--percentage_back_test', default=0, type=int, help='')
     parser.add_argument('--split_training_data',
                         default=True,
                         type=str2bool,
@@ -99,18 +96,18 @@ if __name__ == '__main__':
             str(args.select_best_only), str(args.percentage_split),
             str(args.percentage_back_test), str(args.split_training_data),
             str(args.fixed_splitted_data), str(args.shuffle_gen))
-        
-        with tf.device('/CPU:0'):
-            ga = GA(args.percentage_split, args.percentage_back_test, args.split_training_data,
-                    args.fixed_splitted_data, args.shuffle_gen)
-            last_pop_fitness = ga.evolution(total_feature=len(
-                constant.hanoi_features),
-                                            pc=args.pc,
-                                            pm=args.pm,
-                                            population_size=args.population,
-                                            max_gen=args.gen,
-                                            select_best_only=args.select_best_only,
-                                            log_path=log_path)
+
+        ga = GA(args.percentage_split, args.percentage_back_test,
+                args.split_training_data, args.fixed_splitted_data,
+                args.shuffle_gen)
+        last_pop_fitness = ga.evolution(total_feature=len(
+            constant.hanoi_features),
+                                        pc=args.pc,
+                                        pm=args.pm,
+                                        population_size=args.population,
+                                        max_gen=args.gen,
+                                        select_best_only=args.select_best_only,
+                                        log_path=log_path)
         print(last_pop_fitness)
     elif args.mode == 'seq2seq_train':
         model = EncoderDecoder(is_training=True, **config)
