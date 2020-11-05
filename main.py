@@ -10,10 +10,11 @@ from lib import utils_ga
 from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
-config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
 session = tf.compat.v1.Session(config=config)
 
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 def seed():
     # The below is necessary for starting Numpy generated random numbers
