@@ -10,6 +10,7 @@ done
 fi
 rm -rf "PM2_5-Prediction/log/*"
 cd "PM2_5-Prediction"
+git checkout ga
 tmux new-session -d -s real
 
 FIXED_SHUFFLE_WINDOW=( "shuffle_true-backtest_0" "shuffle_true-backtest_10" "shuffle_true-backtest_20" "shuffle_true-backtest_40" "shuffle_true-backtest_60" "shuffle_true-backtest_80" "shuffle_true-backtest_100")
