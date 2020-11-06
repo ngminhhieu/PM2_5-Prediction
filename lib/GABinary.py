@@ -16,6 +16,8 @@ from lib import preprocessing_data
 from model.supervisor import EncoderDecoder
 import numpy as np
 from datetime import datetime
+from keras import backend as K
+import gc
 
 
 class GA(object):
@@ -95,6 +97,9 @@ class GA(object):
         # predict
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
+        K.clear_session()
+        gc.collect()
+        
         return mae, np.sum(np.array(training_time))
 
     def fitness(self, gen_array, random_number_dataset):
