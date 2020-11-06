@@ -10,6 +10,7 @@ from lib import utils_ga
 from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
+from keras.backend.tensorflow_backend import get_session
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
