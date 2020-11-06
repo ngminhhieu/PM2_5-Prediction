@@ -10,12 +10,12 @@ from lib import utils_ga
 from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
+from tensorflow.python.keras import backend as K
 
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
-set_session(tf.compat.v1.Session(config=config))
+K.set_session(tf.compat.v1.Session(config=config))
 
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"

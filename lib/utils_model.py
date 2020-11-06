@@ -8,16 +8,14 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime
 import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-from keras.backend.tensorflow_backend import clear_session
-from keras.backend.tensorflow_backend import get_session
+from tensorflow.python.keras import backend as K
 
 def reset_keras(model):
     
-    sess = get_session()
-    clear_session()
+    sess = K.get_session()
+    K.clear_session()
     sess.close()
-    sess = get_session()
+    sess = K.get_session()
 
     try:
         del model # this is from global space - change this as you need
