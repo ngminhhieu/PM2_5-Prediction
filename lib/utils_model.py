@@ -7,6 +7,28 @@ import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime
+import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
+from keras.backend.tensorflow_backend import clear_session
+from keras.backend.tensorflow_backend import get_session
+
+def reset_keras(model):
+    
+    sess = get_session()
+    clear_session()
+    sess.close()
+    sess = get_session()
+
+    try:
+        del model # this is from global space - change this as you need
+    except:
+        pass
+
+    print(gc.collect()) # if it's done something you should see a number being outputted
+    config = tf.compat.v1.ConfigProto()
+    config.gpu_options.allow_growth = True
+    config.gpu_options.visible_device_list = "0"
+    set_session(tf.compat.v1.Session(config=config))
 
 def get_logger(log_dir, name, log_filename='info.log', level=logging.INFO):
     logger = logging.getLogger(name)
