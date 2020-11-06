@@ -12,6 +12,7 @@ import pandas as pd
 
 from lib import constant
 from lib import utils_ga
+from lib import utils_model
 from lib import preprocessing_data
 from model.supervisor import EncoderDecoder
 import numpy as np
@@ -97,8 +98,7 @@ class GA(object):
         # predict
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
-        K.clear_session()
-        gc.collect()
+        utils_model.reset_keras(model)
         
         return mae, np.sum(np.array(training_time))
 
