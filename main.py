@@ -1,5 +1,6 @@
-import argparse
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+import argparse
 import sys
 import numpy as np
 import yaml
@@ -11,7 +12,6 @@ from lib import constant
 from model.supervisor import EncoderDecoder
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
-
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
@@ -61,7 +61,6 @@ def str2bool(v):
 
 if __name__ == '__main__':
     seed()
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     sys.path.append(os.getcwd())
     parser = argparse.ArgumentParser()
     parser.add_argument('--use_cpu_only',
