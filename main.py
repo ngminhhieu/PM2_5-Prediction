@@ -122,9 +122,13 @@ if __name__ == '__main__':
                                         log_path=log_path)
         print(last_pop_fitness)
     elif args.mode == 'seq2seq_train':
+        with open(args.config_file) as f:
+            config = yaml.load(f)
         model = EncoderDecoder(is_training=True, **config)
         model.train()
     elif args.mode == 'seq2seq_test':
+        with open(args.config_file) as f:
+            config = yaml.load(f)
         model = EncoderDecoder(is_training=False, **config)
         model.test()
         model.plot_series()
