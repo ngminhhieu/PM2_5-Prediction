@@ -17,7 +17,6 @@ config.gpu_options.allow_growth = True
 config.gpu_options.visible_device_list = "0"
 K.set_session(tf.compat.v1.Session(config=config))
 
-
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # gpus = tf.config.experimental.list_physical_devices('GPU')
 # if gpus:
@@ -98,15 +97,9 @@ if __name__ == '__main__':
                         help='Select best individuals only')
     parser.add_argument('--percentage_split', default=10, type=int, help='')
     parser.add_argument('--percentage_back_test', default=0, type=int, help='')
-    parser.add_argument('--split_training_data',
-                        default=True,
-                        type=str2bool,
-                        help='')
-    parser.add_argument('--fixed_splitted_data',
-                        default=True,
-                        type=str2bool,
-                        help='')
-    parser.add_argument('--shuffle_gen', default=True, type=str2bool, help='')
+    parser.add_argument('--split', default=True, type=str2bool, help='')
+    parser.add_argument('--fixed', default=True, type=str2bool, help='')
+    parser.add_argument('--shuffle', default=True, type=str2bool, help='')
 
     args = parser.parse_args()
 
@@ -114,12 +107,11 @@ if __name__ == '__main__':
         log_path = "log/PM2.5/pc_{}-pm_{}-pop_{}-gen_{}-bestonly_{}-percensplit_{}-percenbacktest_{}-split_{}-fixed_{}-shuffle_{}/".format(
             str(args.pc), str(args.pm), str(args.population), str(args.gen),
             str(args.select_best_only), str(args.percentage_split),
-            str(args.percentage_back_test), str(args.split_training_data),
-            str(args.fixed_splitted_data), str(args.shuffle_gen))
+            str(args.percentage_back_test), str(args.split), str(args.fixed),
+            str(args.shuffle))
 
-        ga = GA(args.percentage_split, args.percentage_back_test,
-                args.split_training_data, args.fixed_splitted_data,
-                args.shuffle_gen)
+        ga = GA(args.percentage_split, args.percentage_back_test, args.split,
+                args.fixed, args.shuffle)
         last_pop_fitness = ga.evolution(total_feature=len(
             constant.hanoi_features),
                                         pc=args.pc,

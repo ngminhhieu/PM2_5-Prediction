@@ -92,17 +92,17 @@ class GA(object):
 
         config = utils_ga.load_config(self.config_path_ga)
         # train
-        model_train = EncoderDecoder(is_training=True, **config)
-        training_time = model_train.train()
+        model = EncoderDecoder(is_training=True, **config)
+        training_time = model.train()
 
         # predict
-        model_test = EncoderDecoder(is_training=False, **config)
-        mae = model_test.test()
-        # utils_model.reset_keras(model)
-        del model_train
-        del model_test
-        K.clear_session()
-        gc.collect()
+        model = EncoderDecoder(is_training=False, **config)
+        mae = model.test()
+        utils_model.reset_keras(model)
+        # del model_train
+        # del model_test
+        # K.clear_session()
+        # gc.collect()
         
         return mae, np.sum(np.array(training_time))
 
