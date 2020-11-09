@@ -9,6 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
+import gc
 
 def reset_keras(model):
     
