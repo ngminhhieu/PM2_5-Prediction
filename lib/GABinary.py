@@ -98,7 +98,7 @@ class GA(object):
         # predict
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
-        utils_model.reset_keras(model)
+        # utils_model.reset_keras(model)
         # del model_train
         # del model_test
         # K.clear_session()
