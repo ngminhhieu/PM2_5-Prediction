@@ -61,6 +61,7 @@ def str2bool(v):
 
 if __name__ == '__main__':
     seed()
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     sys.path.append(os.getcwd())
     parser = argparse.ArgumentParser()
     parser.add_argument('--use_cpu_only',
