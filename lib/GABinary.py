@@ -99,10 +99,9 @@ class GA(object):
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
         # utils_model.reset_keras(model)
-        # del model_train
-        # del model_test
-        # K.clear_session()
-        # gc.collect()
+        del model
+        K.clear_session()
+        gc.collect()
         
         return mae, np.sum(np.array(training_time))
 
