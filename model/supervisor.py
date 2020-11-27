@@ -12,8 +12,8 @@ from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
 from datetime import datetime
-from matplotlib import pyplot as plt
-# matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 
 
 class TimeHistory(keras_callbacks.Callback):
@@ -246,18 +246,18 @@ class EncoderDecoder():
         dump_model_history.to_csv(self._log_dir + 'training_history.csv', index=False)
 
     def _plot_training_history(self, model_history):
-        import matplotlib.pyplot as plt
+        import matplotlib.pyplot as matplotlib.pyplot
 
-        plt.plot(model_history.history['loss'], label='loss')
-        plt.plot(model_history.history['val_loss'], label='val_loss')
-        plt.savefig(self._log_dir + '[loss]{}.png'.format(self._alg_name))
-        plt.legend()
-        plt.close()
+        matplotlib.pyplot.plot(model_history.history['loss'], label='loss')
+        matplotlib.pyplot.plot(model_history.history['val_loss'], label='val_loss')
+        matplotlib.pyplot.savefig(self._log_dir + '[loss]{}.png'.format(self._alg_name))
+        matplotlib.pyplot.legend()
+        matplotlib.pyplot.close()
 
-        plt.plot(model_history.history['val_loss'], label='val_loss')
-        plt.savefig(self._log_dir + '[val_loss]{}.png'.format(self._alg_name))
-        plt.legend()
-        plt.close()
+        matplotlib.pyplot.plot(model_history.history['val_loss'], label='val_loss')
+        matplotlib.pyplot.savefig(self._log_dir + '[val_loss]{}.png'.format(self._alg_name))
+        matplotlib.pyplot.legend()
+        matplotlib.pyplot.close()
 
     # def plot_models(self):
     #     plot_model(model=self.model, to_file=self._log_dir + '/model.png', show_shapes=True)
@@ -274,8 +274,8 @@ class EncoderDecoder():
             pd.DataFrame(gt).to_csv(self._log_dir + "grouthtruth_values.csv", header=['PM10','PM2.5'], index=False)
 
         for i in range(preds.shape[1]):
-            plt.plot(preds[:, i], label='preds')
-            plt.plot(gt[:, i], label='gt')
-            plt.legend()
-            plt.savefig(self._log_dir + '[result_predict]output_dim_{}.png'.format(str(i+1)))
-            plt.close()
+            matplotlib.pyplot.plot(preds[:, i], label='preds')
+            matplotlib.pyplot.plot(gt[:, i], label='gt')
+            matplotlib.pyplot.legend()
+            matplotlib.pyplot.savefig(self._log_dir + '[result_predict]output_dim_{}.png'.format(str(i+1)))
+            matplotlib.pyplot.close()
