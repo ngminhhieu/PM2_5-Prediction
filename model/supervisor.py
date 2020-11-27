@@ -82,7 +82,7 @@ class EncoderDecoder():
             self._log_dir + "best_model.hdf5",
             monitor='val_loss', verbose=1,
             save_best_only=True,
-            mode='auto', period=1)
+            mode='auto', save_freq=1)
         self._earlystop = EarlyStopping(monitor='val_loss', patience=self._train_kwargs.get('patience'),
                                         verbose=1, mode='auto')
         self._time_callback = TimeHistory()

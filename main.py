@@ -76,7 +76,7 @@ if __name__ == '__main__':
                         type=str,
                         help='Run mode.')
     parser.add_argument('--pc',
-                        default=0.3,
+                        default=0.8,
                         type=float,
                         help='Probability of Crossover')
     parser.add_argument('--pm',
