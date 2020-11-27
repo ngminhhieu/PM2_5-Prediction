@@ -45,7 +45,7 @@ class GA(object):
             pivot_split_train_test = int(0.8*(len(dataset)))
             dataset_train = dataset[0: pivot_split_train_test]
             dataset_train.to_csv('data/csv/ga/dataset_train.csv')
-            dataset_test = dataset_test[pivot_split_train_test:]
+            dataset_test = dataset[pivot_split_train_test:]
             if 100 % self.percentage_split == 0:
                 number_of_minor_dataset = int(100 / self.percentage_split)
             else:
