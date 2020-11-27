@@ -46,20 +46,21 @@ class GA(object):
             dataset_train = dataset[0: pivot_split_train_test]
             dataset_train.to_csv('data/csv/ga/dataset_train.csv')
             dataset_test = dataset[pivot_split_train_test:]
+            dataset_test.to_csv('data/csv/ga/dataset_test.csv')
             if 100 % self.percentage_split == 0:
                 number_of_minor_dataset = int(100 / self.percentage_split)
             else:
                 number_of_minor_dataset = int(100 / self.percentage_split) + 1
             if self.fixed_splitted_data:
-                pivot = int(self.percentage_split * len(dataset) / 100)
+                pivot = int(self.percentage_split * len(dataset_train) / 100)
                 for i in range(number_of_minor_dataset - 1):
                     # pd.read_csv(self.dataset_csv, skiprows = lambda x: x not in rows_to_keep)
-                    tmp_dataset = dataset.iloc[i * pivot:(i + 1) *
+                    tmp_dataset = dataset_train.iloc[i * pivot:(i + 1) *
                                                pivot].copy()
                     tmp_dataset.to_csv('data/csv/ga/dataset_{}.csv'.format(i +
                                                                            1))
 
-                tmp_dataset = dataset.iloc[pivot *
+                tmp_dataset = dataset_train.iloc[pivot *
                                            (number_of_minor_dataset - 1):]
                 tmp_dataset.to_csv('data/csv/ga/dataset_{}.csv'.format(
                     number_of_minor_dataset))
