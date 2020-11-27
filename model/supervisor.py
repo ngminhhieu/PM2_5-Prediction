@@ -13,6 +13,7 @@ from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib
 matplotlib.use('Agg')
 
 
