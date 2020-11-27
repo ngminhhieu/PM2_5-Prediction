@@ -2,7 +2,7 @@
 
 if [ ! -d "PM2_5-Prediction" ]
 then
-git clone https://github.com/ngminhhieu/PM2_5-Prediction
+git clone -b ga https://github.com/ngminhhieu/PM2_5-Prediction
 while [ ! -d "PM2_5-Prediction" ]
 do
   sleep 2 # or less like 0.2
@@ -10,7 +10,6 @@ done
 fi
 rm -rf "PM2_5-Prediction/log/*"
 cd "PM2_5-Prediction"
-git checkout ga
 tmux new-session -d -s real
 
 FIXED_SHUFFLE_WINDOW=( "fixed_false-backtest_0" "fixed_false-backtest_10" "fixed_false-backtest_20" "fixed_false-backtest_40" "fixed_false-backtest_60" "fixed_false-backtest_80" "fixed_false-backtest_100")
@@ -35,7 +34,7 @@ done
 sleep 1
 for i in "${index[@]}"
 do
-    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python3 main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle_gen=false' ENTER" ENTER
+    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python3 main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false' ENTER" ENTER
 done
 
 # End of outer loop.

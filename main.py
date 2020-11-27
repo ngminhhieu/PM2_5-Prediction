@@ -9,13 +9,12 @@ from model.supervisor import EncoderDecoder
 from lib.GABinary import GA
 from lib import utils_ga
 from lib import constant
-from model.supervisor import EncoderDecoder
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
-config = tf.compat.v1.ConfigProto()
-config.gpu_options.allow_growth = True
-config.gpu_options.visible_device_list = "0"
-K.set_session(tf.compat.v1.Session(config=config))
+# config = tf.compat.v1.ConfigProto()
+# config.gpu_options.allow_growth = True
+# config.gpu_options.visible_device_list = "0"
+# K.set_session(tf.compat.v1.Session(config=config))
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # gpus = tf.config.experimental.list_physical_devices('GPU')

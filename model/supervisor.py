@@ -12,6 +12,8 @@ from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
 from datetime import datetime
+from matplotlib import pyplot as plt
+# matplotlib.use('Agg')
 
 
 class TimeHistory(keras_callbacks.Callback):
@@ -262,7 +264,6 @@ class EncoderDecoder():
 
 
     def plot_series(self):
-        from matplotlib import pyplot as plt
         preds = np.load(self._log_dir+'pd.npy')
         gt = np.load(self._log_dir+'gt.npy')
         if preds.shape[1] == 1 and gt.shape[1] == 1:
