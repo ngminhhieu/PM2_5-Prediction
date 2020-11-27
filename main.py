@@ -1,7 +1,5 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-import matplotlib
-matplotlib.use('Agg')
 import argparse
 import sys
 import numpy as np
@@ -13,6 +11,7 @@ from lib import utils_ga
 from lib import constant
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
+from lib import preprocessing_data
 # config = tf.compat.v1.ConfigProto()
 # config.gpu_options.allow_growth = True
 # config.gpu_options.visible_device_list = "0"
@@ -96,6 +95,10 @@ if __name__ == '__main__':
                         default=True,
                         type=str2bool,
                         help='Select best individuals only')
+    parser.add_argument('--tmp',
+                        default=0,
+                        type=int,
+                        help='Number of experiments')                    
     parser.add_argument('--percentage_split', default=10, type=int, help='')
     parser.add_argument('--percentage_back_test', default=0, type=int, help='')
     parser.add_argument('--split', default=True, type=str2bool, help='')
@@ -113,7 +116,7 @@ if __name__ == '__main__':
 
         ga = GA(args.percentage_split, args.percentage_back_test, args.split,
                 args.fixed, args.shuffle)
-        last_pop_fitness = ga.evolution(total_feature=len(
+        last_pop_fitness, fitness_gen = ga.evolution(total_feature=len(
             constant.hanoi_features),
                                         pc=args.pc,
                                         pm=args.pm,
@@ -121,7 +124,10 @@ if __name__ == '__main__':
                                         max_gen=args.gen,
                                         select_best_only=args.select_best_only,
                                         log_path=log_path)
-        print(last_pop_fitness)
+        preprocessing_data.generate_npz(
+                    fitness_gen,
+                    'data/csv/hanoi_data_full.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(tmp)),
+                    'config/hanoi/final_after_ga_{}.yaml'.format(str(tmp)), 'log/PM2.5/final_after_ga_{}/GA/seq2seq/'.format(str(tmp)))
     elif args.mode == 'seq2seq_train':
         with open(args.config_file) as f:
             config = yaml.load(f)

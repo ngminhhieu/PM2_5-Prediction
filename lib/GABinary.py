@@ -320,4 +320,4 @@ class GA(object):
         utils_ga.write_log(path=ga_log_path,
                            filename="fitness_gen.csv",
                            error=[total_time_training])
-        return pop_fitness
+        return pop_fitness, population[0]["gen"]
