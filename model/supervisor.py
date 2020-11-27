@@ -246,8 +246,6 @@ class EncoderDecoder():
         dump_model_history.to_csv(self._log_dir + 'training_history.csv', index=False)
 
     def _plot_training_history(self, model_history):
-        import matplotlib.pyplot as matplotlib.pyplot
-
         matplotlib.pyplot.plot(model_history.history['loss'], label='loss')
         matplotlib.pyplot.plot(model_history.history['val_loss'], label='val_loss')
         matplotlib.pyplot.savefig(self._log_dir + '[loss]{}.png'.format(self._alg_name))
