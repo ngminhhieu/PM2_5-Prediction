@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import os
 import time
 import keras.callbacks as keras_callbacks
@@ -13,9 +15,6 @@ from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
 from datetime import datetime
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-
 
 class TimeHistory(keras_callbacks.Callback):
     def on_train_begin(self, logs={}):

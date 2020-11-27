@@ -144,6 +144,7 @@ class GA(object):
         # predict
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
+        utils_model.reset_keras(model)
         return mae, np.sum(np.array(training_time))
 
     def individual(self, total_feature):

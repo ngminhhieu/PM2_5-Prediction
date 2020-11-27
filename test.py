@@ -13,7 +13,6 @@
 
 import pandas as pd
 import numpy as np
-
 df = pd.read_csv('data/csv/hanoi_data_full.csv', usecols=['WIND_SPEED', 'TEMP', 'RADIATION', 'PM10', 'PM2.5'])
 
 df = df.groupby(np.arange(len(df.index))//24).mean()

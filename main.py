@@ -1,5 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+import matplotlib
+matplotlib.use('Agg')
 import argparse
 import sys
 import numpy as np
