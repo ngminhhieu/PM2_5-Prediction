@@ -12,8 +12,8 @@ from lib import constant
 import tensorflow as tf
 from tensorflow.python.keras import backend as K
 from lib import preprocessing_data
-# config = tf.compat.v1.ConfigProto()
-# config.gpu_options.allow_growth = True
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
 # config.gpu_options.visible_device_list = "0"
 # K.set_session(tf.compat.v1.Session(config=config))
 
