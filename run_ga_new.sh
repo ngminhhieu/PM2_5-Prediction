@@ -22,7 +22,7 @@ done
 sleep 1
 for i in "${index[@]}"
 do
-    tmux send-keys -t real "tmux send-keys -t ${FIXED_SHUFFLE_WINDOW[$i]} 'python3 main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false' ENTER" ENTER
+    tmux send-keys -t real "tmux send-keys -t ${FIXED_SHUFFLE_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --tmp=$i' ENTER" ENTER
 done
 
 FIXED_WINDOW=( "fixed_false-shuffle_false-backtest_0" "fixed_false-shuffle_false-backtest_10" "fixed_false-shuffle_false-backtest_20" "fixed_false-shuffle_false-backtest_40" "fixed_false-shuffle_false-backtest_60" "fixed_false-shuffle_false-backtest_80" "fixed_false-shuffle_false-backtest_100")
@@ -34,7 +34,7 @@ done
 sleep 1
 for i in "${index[@]}"
 do
-    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python3 main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false' ENTER" ENTER
+    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false --tmp=$i' ENTER" ENTER
 done
 
 # End of outer loop.
