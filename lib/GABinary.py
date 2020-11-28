@@ -31,7 +31,7 @@ class GA(object):
         self.config_path_ga = ''
         self.seq2seq_path = ''
         self.shuffle_gen = shuffle_gen
-        self.dataset_csv = 'data/csv/hanoi_data_full.csv'
+        self.dataset_csv = 'data/csv/ga/dataset_train.csv'
         self.split_training_data = split_training_data
         self.fixed_splitted_data = fixed_splitted_data
         self.number_of_minor_dataset = self.split_data()
@@ -41,7 +41,7 @@ class GA(object):
 
     def split_data(self):
         if self.split_training_data:
-            dataset = pd.read_csv(self.dataset_csv)
+            dataset = pd.read_csv('data/csv/hanoi_data_full.csv')
             pivot_split_train_test = int(0.8*(len(dataset)))
             dataset_train = dataset[0: pivot_split_train_test]
             dataset_train.to_csv('data/csv/ga/dataset_train.csv')
@@ -72,6 +72,8 @@ class GA(object):
         for index, value in enumerate(gen_array, start=0):
             if value == 1:
                 input_features.append(constant.hanoi_features[index])
+        
+        print("Len of input features: ", len(input_features)+1)
 
         if self.split_training_data:
             dataset = pd.read_csv(self.dataset_csv)
@@ -115,6 +117,8 @@ class GA(object):
         for index, value in enumerate(gen_array, start=0):
             if value == 1:
                 input_features.append(constant.hanoi_features[index])
+        
+        print("Len of input features: ", len(input_features)+1)
 
         if self.split_training_data:
             dataset = pd.read_csv(self.dataset_csv)
