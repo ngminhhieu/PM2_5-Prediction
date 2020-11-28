@@ -108,7 +108,7 @@ class GA(object):
         utils_model.reset_keras(model)
         # del model
         # K.clear_session()
-        # gc.collect()
+        gc.collect()
         
         return mae, np.sum(np.array(training_time))
 
@@ -154,6 +154,7 @@ class GA(object):
         model = EncoderDecoder(is_training=False, **config)
         mae = model.test()
         utils_model.reset_keras(model)
+        gc.collect()
         return mae, np.sum(np.array(training_time))
 
     def individual(self, total_feature):
