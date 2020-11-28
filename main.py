@@ -98,7 +98,7 @@ if __name__ == '__main__':
             str(args.shuffle))
 
         ga = GA(args.percentage_split, args.percentage_back_test, args.split,
-                args.fixed, args.shuffle)
+                args.fixed, args.shuffle, args.tmp)
         last_pop_fitness, fitness_gen = ga.evolution(total_feature=len(
             constant.hanoi_features),
                                         pc=args.pc,

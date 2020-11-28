@@ -23,7 +23,7 @@ import gc
 
 class GA(object):
     def __init__(self, percentage_split, percentage_back_test,
-                 split_training_data, fixed_splitted_data, shuffle_gen):
+                 split_training_data, fixed_splitted_data, shuffle_gen, tmp):
         self.percentage_split = percentage_split
         self.percentage_back_test = percentage_back_test
         self.target_feature = ['PM2.5']
@@ -35,7 +35,7 @@ class GA(object):
         self.split_training_data = split_training_data
         self.fixed_splitted_data = fixed_splitted_data
         self.number_of_minor_dataset = self.split_data()
-
+        self.tmp = tmp
         self.gen = 1
         self.count_gen = 0
 
@@ -90,10 +90,10 @@ class GA(object):
                 random_start_point = random.randint(0, len(dataset) - pivot)
                 tmp_dataset = dataset.iloc[
                     random_start_point:random_start_point + pivot]
-                tmp_dataset.to_csv('data/csv/ga/flex_shuffle_split_data.csv')
+                tmp_dataset.to_csv('data/csv/ga/flex_shuffle_split_data_{}.csv'.format(str(self.tmp)))
                 preprocessing_data.generate_npz(
                     input_features + self.target_feature,
-                    'data/csv/ga/flex_shuffle_split_data.csv',
+                    'data/csv/ga/flex_shuffle_split_data_{}.csv'.format(str(self.tmp)),
                     self.output_dir_npz, self.config_path_ga,
                     self.seq2seq_path)
 
@@ -137,11 +137,11 @@ class GA(object):
                     tmp_dataset = dataset.iloc[
                         random_start_point:random_start_point + pivot]
                     tmp_dataset.to_csv(
-                        'data/csv/ga/flex_no_shuffle_split_data.csv')
+                        'data/csv/ga/flex_no_shuffle_split_data_{}.csv'.format(str(self.tmp)))
                     self.count_gen = self.gen
                 preprocessing_data.generate_npz(
                     input_features + self.target_feature,
-                    'data/csv/ga/flex_no_shuffle_split_data.csv',
+                    'data/csv/ga/flex_no_shuffle_split_data_{}.csv'.format(str(self.tmp)),
                     self.output_dir_npz, self.config_path_ga,
                     self.seq2seq_path)
 
