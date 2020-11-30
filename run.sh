@@ -31,7 +31,7 @@ do
 done
 for i in "${index[@]}"
 do
-    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false --tmp=${$i+7}' ENTER" ENTER
+    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false --tmp=(($i+7))' ENTER" ENTER
 done
 
 # End of outer loop.
