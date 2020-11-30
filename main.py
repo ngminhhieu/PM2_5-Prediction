@@ -14,6 +14,7 @@ from tensorflow.python.keras import backend as K
 from lib import preprocessing_data
 config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
+# Allow run multiple scripts python main.py
 K.set_session(tf.compat.v1.Session(config=config))
 def checkGPU():
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
