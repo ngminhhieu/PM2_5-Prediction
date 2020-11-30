@@ -15,6 +15,7 @@ tmux new-session -d -s real
 WINDOW=( "ffb0" "fffb10" "fffb20" "fffb40" "fffb60" "fffb80" "fffb100")
 FIXED_WINDOW=( "ffshb0" "ffshb10" "ffshb20" "ffshb40" "ffshb60" "ffshb80" "ffshb100")
 index=(0 1 2 3 4 5 6)
+tmp=(7 8 9 10 11 12 13)
 percentage_back_test=(0 10 20 40 60 80 100)
 for i in "${index[@]}"
 do
@@ -31,7 +32,7 @@ do
 done
 for i in "${index[@]}"
 do
-    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false --tmp=(($i+7))' ENTER" ENTER
+    tmux send-keys -t real "tmux send-keys -t ${FIXED_WINDOW[$i]} 'python main.py --percentage_back_test=${percentage_back_test[$i]} --fixed=false --shuffle=false --tmp=${tmp[$i]}' ENTER" ENTER
 done
 
 # End of outer loop.
