@@ -26,7 +26,7 @@ def reset_keras(model):
     print(gc.collect()) # if it's done something you should see a number being outputted
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    config.gpu_options.visible_device_list = "0"
+    # config.gpu_options.visible_device_list = "0"
     K.set_session(tf.compat.v1.Session(config=config))
 
 def get_logger(log_dir, name, log_filename='info.log', level=logging.INFO):
