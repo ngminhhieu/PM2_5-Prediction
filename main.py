@@ -124,7 +124,7 @@ if __name__ == '__main__':
                     fitness_gen,
                     'data/csv/hanoi_data_full.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(args.tmp)),
                     'config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)), 'log/PM2.5/final_after_ga_{}/GA/seq2seq/'.format(str(args.tmp)))
-        config = utils_ga.load_config('config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp))
+        config = utils_ga.load_config('config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)))
         model = EncoderDecoder(is_training=True, **config)
         training_time = model.train()
         model = EncoderDecoder(is_training=False, **config)
