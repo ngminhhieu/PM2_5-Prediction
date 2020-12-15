@@ -120,8 +120,13 @@ if __name__ == '__main__':
                                         max_gen=args.gen,
                                         select_best_only=args.select_best_only,
                                         log_path=log_path)
+
+        input_features = []
+        for index, value in enumerate(fitness_gen, start=0):
+            if value == 1:
+                input_features.append(fitness_gen[index])
         preprocessing_data.generate_npz(
-                    fitness_gen,
+                    input_features + ['PM2.5'],
                     'data/csv/hanoi_data_full.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(args.tmp)),
                     'config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)), 'log/PM2.5/final_after_ga_{}/GA/seq2seq/'.format(str(args.tmp)))
         config = utils_ga.load_config('config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)))
