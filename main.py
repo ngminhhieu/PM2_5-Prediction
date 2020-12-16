@@ -124,7 +124,7 @@ if __name__ == '__main__':
         input_features = []
         for index, value in enumerate(fitness_gen, start=0):
             if value == 1:
-                input_features.append(fitness_gen[index])
+                input_features.append(constant.hanoi_features[index])
         preprocessing_data.generate_npz(
                     input_features + ['PM2.5'],
                     'data/csv/hanoi_data_full.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(args.tmp)),
