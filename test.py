@@ -68,3 +68,7 @@ s_clf = SVC()
 s_clf.fit(X,Y)
 s_prediction = s_clf.predict(test_data)
 print(s_prediction)
+
+
+
+test_df = read.csv('./data/csv/hanoi_data_full.csv', usecols=)
