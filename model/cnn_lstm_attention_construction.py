@@ -1,4 +1,4 @@
-from keras.layers import Dense, Input, LSTM, Conv1D
+from keras.layers import Dense, Input, LSTM, Conv1D, Concatenate
 from keras.models import Model
 from model.attention import AttentionLayer
 # from keras.utils import plot_model

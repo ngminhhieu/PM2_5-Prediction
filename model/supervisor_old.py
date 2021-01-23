@@ -9,8 +9,6 @@ import yaml
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from tqdm import tqdm
 from lib import utils_model
-from keras.models import Sequential
-from keras.layers import LSTM
 # from keras.utils import plot_model
 from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
@@ -18,7 +16,6 @@ from model.gru_ed_construction import gru_ed_model_construction
 from model.cnn_lstm_attention_construction import cnn_lstm_attention_construction
 from datetime import datetime
 import matplotlib.pyplot as plt
-from model.attention_decoder import AttentionDecoder
 
 class TimeHistory(keras_callbacks.Callback):
     def on_train_begin(self, logs={}):
@@ -95,7 +92,32 @@ class EncoderDecoder():
         self.callbacks_list.append(self._earlystop)
         self.callbacks_list.append(self._time_callback)
                                                         
-        self.model = build_model()
+        if self._type == 'lstm_ed':
+            if is_training:
+                self.model = lstm_ed_model_construction(self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+            else:
+                self.model, self.encoder_model, self.decoder_model = lstm_ed_model_construction(self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+        
+        elif self._type == 'bilstm_ed':
+            if is_training:
+                self.model = bilstm_ed_model_construction(self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+            else:
+                self.model, self.encoder_model, self.decoder_model = bilstm_ed_model_construction(self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+
+        elif self._type == 'cnn_lstm_attention':
+            if is_training:
+                self.model = cnn_lstm_attention_construction(self._seq_len, self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+            else:
+                self.model, self.encoder_model, self.decoder_model = cnn_lstm_attention_construction(self._seq_len, self._input_dim, self._output_dim, self._rnn_units, self._dropout,
+                                                        self._optimizer, self._log_dir, is_training=is_training)
+
+        else:
+            raise RuntimeError("Model type is invalid!")
 
     @staticmethod
     def _get_log_dir(kwargs):
@@ -120,11 +142,6 @@ class EncoderDecoder():
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         return log_dir
-
-    def build_model():
-        model = Sequential()
-        model.add(LSTM(150, input_shape=(n_timesteps_in, n_features), return_sequences=True))
-        model.add(AttentionDecoder(150, n_features))
 
     def train(self):
         self.model.compile(optimizer=self._optimizer, loss='mse', metrics=['mse', 'mae'])
@@ -174,7 +191,7 @@ class EncoderDecoder():
                 break
             input = np.zeros(shape=(self._test_batch_size, l, self._input_dim))
             input[0, :, :] = data_test[i:i+l].copy()
-            yhats = self.model.predict(input)
+            yhats = self._predict(input)
             _pd[i + l:i + l + h] = yhats
 
             # update y
@@ -197,6 +214,22 @@ class EncoderDecoder():
         mae = utils_model.mae(ground_truth.flatten(), predicted_data.flatten())
         utils_model.save_metrics(error_list, self._log_dir, self._alg_name)
         return mae
+
+    def _predict(self, source):
+        states_value = self.encoder_model.predict(source)
+        target_seq = np.zeros((self._test_batch_size, 1, self._output_dim))
+        preds = np.zeros(shape=(self._horizon, self._output_dim),
+                        dtype='float32')
+        for i in range(self._horizon):
+            output = self.decoder_model.predict([target_seq] + states_value)
+            yhat = output[0]
+            # store prediction
+            preds[i] = yhat
+            # update target sequence
+            target_seq = yhat
+            # Update states
+            states_value = output[1:]
+        return preds
 
     def load(self):
         self.model.load_weights(self._log_dir + 'best_model.hdf5')
