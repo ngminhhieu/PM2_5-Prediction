@@ -13,6 +13,7 @@ from lib import utils_model
 from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
+from model.cnn_lstm_attention_construction import cnn_lstm_attention_construction
 from datetime import datetime
 import matplotlib.pyplot as plt
 
