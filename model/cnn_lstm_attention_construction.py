@@ -4,10 +4,9 @@ from keras.models import Model
 
 def cnn_lstm_attention_construction(seq_len, input_dim, output_dim, rnn_units, dropout, optimizer, log_dir, is_training=True):
     encoder_inputs = Input(shape=(seq_len, input_dim), name='encoder_input')
-    # conv1d_layer = Conv1D(filters=64, kernel_size=3, activation='relu')
-    # output_conv1d_layer = conv1d_layer(encoder_inputs)
+    conv1d_layer = Conv1D(filters=64, kernel_size=3, activation='relu')(encoder_inputs)
     encoder = LSTM(rnn_units, return_sequences=True, return_state=True)
-    encoder_outputs, state_h, state_c = encoder(encoder_inputs)
+    encoder_outputs, state_h, state_c = encoder(conv1d_layer)
 
     encoder_states = [state_h, state_c]
 
