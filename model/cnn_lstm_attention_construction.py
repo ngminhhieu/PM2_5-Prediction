@@ -2,7 +2,7 @@ from keras.layers import Dense, Input, LSTM, Conv1D
 from keras.models import Model
 # from keras.utils import plot_model
 
-def cnn_lstm_attention_construction(input_dim, output_dim, rnn_units, dropout, optimizer, log_dir, is_training=True):
+def cnn_lstm_attention_construction(seq_len, input_dim, output_dim, rnn_units, dropout, optimizer, log_dir, is_training=True):
     encoder_inputs = Input(shape=(seq_len, input_dim), name='encoder_input')
     conv1d_layer = Conv1D(filters=64, kernel_size=3, activation='relu')(encoder_inputs)
     encoder = LSTM(rnn_units, return_sequences=True, return_state=True)
