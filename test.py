@@ -72,3 +72,4 @@ print(s_prediction)
 
 
 test_df = read.csv('./data/csv/hanoi_data_full.csv', usecols=)
+np.savez('./data/npz/taiwan/taiwan.npz', monitoring_data = dataset)

@@ -85,7 +85,7 @@ def create_data(data, seq_len, input_dim, output_dim, horizon, verified_percenta
 
 
 def load_dataset(seq_len, horizon, input_dim, output_dim, dataset, test_size, valid_size, verified_percentage):
-    raw_data = np.load(dataset, allow_pickle=True)['monitoring_data']
+    raw_data = np.load(dataset)['monitoring_data']
     
     train_data2d, valid_data2d, test_data2d = prepare_train_valid_test_2d(data=raw_data, test_size=test_size, valid_size=valid_size)
     data = {}

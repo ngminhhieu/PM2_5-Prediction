@@ -271,8 +271,8 @@ class EncoderDecoder():
 
 
     def plot_series(self):
-        preds = np.load(self._log_dir+'pd.npy', allow_pickle=True)
-        gt = np.load(self._log_dir+'gt.npy', allow_pickle=True)
+        preds = np.load(self._log_dir+'pd.npy')
+        gt = np.load(self._log_dir+'gt.npy')
         if preds.shape[1] == 1 and gt.shape[1] == 1:
             pd.DataFrame(preds).to_csv(self._log_dir + "prediction_values.csv", header=['PM2.5'], index=False)
             pd.DataFrame(gt).to_csv(self._log_dir + "grouthtruth_values.csv", header=['PM2.5'], index=False)
