@@ -10,7 +10,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from tqdm import tqdm
 from lib import utils_model
 from keras.models import Sequential
-from keras.layers import LSTM
+from keras.layers import LSTM, Dense
 # from keras.utils import plot_model
 from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
@@ -122,9 +122,13 @@ class EncoderDecoder():
         return log_dir
 
     def build_model():
-        model = Sequential()
-        model.add(LSTM(150, input_shape=(n_timesteps_in, n_features), return_sequences=True))
-        model.add(AttentionDecoder(150, n_features))
+        model = Sequential([
+        LSTM(100, input_shape=(self._seq_len, self._input_dim), return_sequences=True),
+        Attention(name='attention_weight'),
+        Dropout(0.2),
+        Dense(1, activation='relu')
+    ])
+        return model
 
     def train(self):
         self.model.compile(optimizer=self._optimizer, loss='mse', metrics=['mse', 'mae'])
