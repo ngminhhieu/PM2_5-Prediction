@@ -3,7 +3,7 @@ from tensorflow.keras.layers import Dense, Lambda, dot, Activation, concatenate
 from tensorflow.keras.layers import Layer
 
 
-class AttentionDecoder(Layer):
+class Attention(Layer):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

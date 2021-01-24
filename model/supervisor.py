@@ -18,7 +18,7 @@ from model.gru_ed_construction import gru_ed_model_construction
 from model.cnn_lstm_attention_construction import cnn_lstm_attention_construction
 from datetime import datetime
 import matplotlib.pyplot as plt
-from model.attention_decoder import AttentionDecoder
+from model.attention_decoder import Attention
 
 class TimeHistory(keras_callbacks.Callback):
     def on_train_begin(self, logs={}):
