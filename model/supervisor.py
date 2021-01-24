@@ -95,7 +95,7 @@ class EncoderDecoder():
         self.callbacks_list.append(self._earlystop)
         self.callbacks_list.append(self._time_callback)
                                                         
-        self.model = build_model()
+        self.model = self.build_model()
 
     @staticmethod
     def _get_log_dir(kwargs):
@@ -121,7 +121,7 @@ class EncoderDecoder():
             os.makedirs(log_dir)
         return log_dir
 
-    def build_model():
+    def build_model(self):
         model = Sequential([
         LSTM(100, input_shape=(self._seq_len, self._input_dim), return_sequences=True),
         Attention(name='attention_weight'),
