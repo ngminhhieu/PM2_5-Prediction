@@ -123,9 +123,9 @@ class EncoderDecoder():
 
     def build_model(self):
         model = Sequential([
-        LSTM(100, input_shape=(self._seq_len, self._input_dim), return_sequences=True),
+        Conv1D(filters=64, kernel_size=3, activation='relu', input_shape=(self._seq_len, self._input_dim)),
+        LSTM(256, return_sequences=True),
         Attention(name='attention_weight'),
-        Dropout(0.2),
         Dense(1, activation='relu')
     ])
         return model
@@ -133,13 +133,12 @@ class EncoderDecoder():
     def train(self):
         self.model.compile(optimizer=self._optimizer, loss='mse', metrics=['mse', 'mae'])
 
-        training_history = self.model.fit([self._data['encoder_input_train'], self._data['decoder_input_train']],
+        training_history = self.model.fit(self._data['encoder_input_train'],
                                           self._data['decoder_target_train'],
                                           batch_size=self._batch_size,
                                           epochs=self._epochs,
                                           callbacks=self.callbacks_list,
-                                          validation_data=([self._data['encoder_input_val'],
-                                                            self._data['decoder_input_val']],
+                                          validation_data=(self._data['encoder_input_val'],
                                                            self._data['decoder_target_val']),
                                           shuffle=True,
                                           verbose=2)
