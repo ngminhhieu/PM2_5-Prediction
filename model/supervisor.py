@@ -215,7 +215,7 @@ class EncoderDecoder():
         np.save(self._log_dir+'gt', ground_truth)
         # save metrics to log dir
         error_list = utils_model.cal_error(ground_truth.flatten(), predicted_data.flatten())
-        error_list = error_list.append(inference_time)
+        error_list = error_list + [inference_time]
         mae = utils_model.mae(ground_truth.flatten(), predicted_data.flatten())
         utils_model.save_metrics(error_list, self._log_dir, self._alg_name)
         return mae
