@@ -15,6 +15,7 @@ from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
 from model.cnn_lstm_attention_construction import cnn_lstm_attention_construction
 from datetime import datetime
+import time
 import matplotlib.pyplot as plt
 
 class TimeHistory(keras_callbacks.Callback):
@@ -169,6 +170,7 @@ class EncoderDecoder():
 
     def test(self):
         scaler = self._data['scaler']
+        start_time = start_time = time.time()
         data_test = self._data['test_data_norm'].copy()
         # this is the meterogical data
         other_features_data = data_test[:, 0:(self._input_dim-self._output_dim)].copy()
@@ -199,6 +201,8 @@ class EncoderDecoder():
             _bm = bm[i + l:i + l + h].copy()
             pd[i + l:i + l + h] = yhats * (1.0 - _bm) + _gt * _bm
         
+        
+        inference_time = (time.time()-start_time)
         # rescale metrics
         residual_row = len(other_features_data)-len(_pd)
         if residual_row != 0:
@@ -211,6 +215,7 @@ class EncoderDecoder():
         np.save(self._log_dir+'gt', ground_truth)
         # save metrics to log dir
         error_list = utils_model.cal_error(ground_truth.flatten(), predicted_data.flatten())
+        error_list = error_list.append(inference_time)
         mae = utils_model.mae(ground_truth.flatten(), predicted_data.flatten())
         utils_model.save_metrics(error_list, self._log_dir, self._alg_name)
         return mae
