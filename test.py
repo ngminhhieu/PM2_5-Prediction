@@ -1,6 +1,6 @@
-# from keras.models import Model
-# from keras.layers import Input
-# from keras.layers import LSTM
+# from tensorflow.keras.models import Model
+# from tensorflow.keras.layers import Input
+# from tensorflow.keras.layers import LSTM
 # from numpy import array
 # # define model
 # inputs1 = Input(shape=(3, 1))

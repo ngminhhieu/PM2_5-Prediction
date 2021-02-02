@@ -1,7 +1,7 @@
-from keras.layers import Dense, Input, LSTM, Conv1D, Concatenate
-from keras.models import Model
+from tensorflow.keras.layers import Dense, Input, LSTM, Conv1D, Concatenate
+from tensorflow.keras.models import Model
 from model.attention import AttentionLayer
-# from keras.utils import plot_model
+# from tensorflow.keras.utils import plot_model
 
 def cnn_lstm_attention_construction(seq_len, input_dim, output_dim, rnn_units, dropout, optimizer, log_dir, is_training=True):
     encoder_inputs = Input(shape=(seq_len, input_dim), name='encoder_input')
