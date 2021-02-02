@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use('Agg')
 import os
 import time
-import keras.callbacks as keras_callbacks
+import tensorflow.keras.callbacks as keras_callbacks
 import numpy as np
 import pandas as pd
 import yaml
