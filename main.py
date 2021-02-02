@@ -136,12 +136,12 @@ if __name__ == '__main__':
         mae = model.test()
     elif args.mode == 'seq2seq_train':
         with open(args.config_file) as f:
-            config = yaml.load(f)
+            config = yaml.safe_load(f)
         model = EncoderDecoder(is_training=True, **config)
         model.train()
     elif args.mode == 'seq2seq_test':
         with open(args.config_file) as f:
-            config = yaml.load(f)
+            config = yaml.safe_load(f)
         model = EncoderDecoder(is_training=False, **config)
         model.test()
         model.plot_series()
