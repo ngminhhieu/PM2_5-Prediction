@@ -15,7 +15,7 @@ def set_config(all_input_features, config_path, output_dir_npz, seq2seq_path):
     if os.path.exists(config_path)==False:
         copyfile("config/hanoi/ga_hanoi.yaml", config_path)
     with open(config_path, 'r') as f:
-        config = yaml.load(f)    
+        config = yaml.safe_load(f)    
     config['model']['input_dim'] = len(all_input_features)
     config['base_dir'] = seq2seq_path
     config['data']['dataset'] = output_dir_npz

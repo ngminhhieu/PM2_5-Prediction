@@ -13,7 +13,6 @@ from lib import utils_model
 from model.bilstm_ed_construction import bilstm_ed_model_construction
 from model.lstm_ed_construction import lstm_ed_model_construction
 from model.gru_ed_construction import gru_ed_model_construction
-from model.cnn_lstm_attention_construction import cnn_lstm_attention_construction
 from datetime import datetime
 import time
 import matplotlib.pyplot as plt
@@ -84,7 +83,7 @@ class EncoderDecoder():
             self._log_dir + "best_model.hdf5",
             monitor='val_loss', verbose=1,
             save_best_only=True,
-            mode='auto', period=1)
+            mode='auto', save_freq='epoch')
         self._earlystop = EarlyStopping(monitor='val_loss', patience=self._train_kwargs.get('patience'),
                                         verbose=1, mode='auto')
         self._time_callback = TimeHistory()
@@ -107,14 +106,6 @@ class EncoderDecoder():
                                                         self._optimizer, self._log_dir, is_training=is_training)
             else:
                 self.model, self.encoder_model, self.decoder_model = bilstm_ed_model_construction(self._input_dim, self._output_dim, self._rnn_units, self._dropout,
-                                                        self._optimizer, self._log_dir, is_training=is_training)
-
-        elif self._type == 'cnn_lstm_attention':
-            if is_training:
-                self.model = cnn_lstm_attention_construction(self._seq_len, self._input_dim, self._output_dim, self._rnn_units, self._dropout,
-                                                        self._optimizer, self._log_dir, is_training=is_training)
-            else:
-                self.model, self.encoder_model, self.decoder_model = cnn_lstm_attention_construction(self._seq_len, self._input_dim, self._output_dim, self._rnn_units, self._dropout,
                                                         self._optimizer, self._log_dir, is_training=is_training)
 
         else:

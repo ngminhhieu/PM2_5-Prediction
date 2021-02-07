@@ -48,28 +48,5 @@ print(psutil.virtual_memory().percent)
 print(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total)
 
 
-
-X = [['male', 'bs'], ['male', 'phd'], ['male', 'bs'], 
-     ['male', 'phd'],['male', 'bs'], ['male', 'phd'], ['male', 'phd'],
-     ['male', 'phd'], ['male', 'bs'], ['male', 'bs'], 
-     ['male', 'bs'], ['male', 'phd'], ['male', 'phd']]
-
-Y = ['good', 'good', 'good', 'good', 'good', 'good', 
-    'well','well','well', 'good', 'good',
-     'well', 'well']
-
-test_data = [['male', 'phd'],['male', 'phd'],['male', 'bs']]
-test_labels = ['good','well','well']
-
-from sklearn.svm import SVC
-
-#Support Vector Classifier
-s_clf = SVC()
-s_clf.fit(X,Y)
-s_prediction = s_clf.predict(test_data)
-print(s_prediction)
-
-
-
-test_df = read.csv('./data/csv/hanoi_data_full.csv', usecols=)
-np.savez('./data/npz/taiwan/taiwan.npz', monitoring_data = dataset)
+test_df = pd.read_csv('./data/csv/taiwan_data_mean.csv', usecols=['AMB_TEMP', 'RH', 'WIND_DIREC', 'WIND_SPEED','PM10', 'PM2.5'])
+np.savez('./data/npz/taiwan/taiwan.npz', monitoring_data = test_df)
