@@ -248,6 +248,7 @@ class EncoderDecoder():
         if self._time_callback.times is not None:
             dump_model_history['train_time'] = self._time_callback.times
 
+        dump_model_history.loc[-1, -1] = np.sum(self._time_callback.times)
         dump_model_history.to_csv(self._log_dir + 'training_history.csv', index=False)
 
     def _plot_training_history(self, model_history):
