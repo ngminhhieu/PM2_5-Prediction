@@ -159,7 +159,6 @@ class EncoderDecoder():
         return self._time_callback.times
 
     def test(self):
-        self.model.load_weights(self._log_dir + 'best_model.hdf5')
         scaler = self._data['scaler']
         start_time = start_time = time.time()
         data_test = self._data['test_data_norm'].copy()
