@@ -1,5 +1,5 @@
 alg: seq2seq
-base_dir: log/seq2seq/ga_hanoi/
+base_dir: log/seq2seq/full_hanoi/
 data:
   batch_size: 200
   dataset: data/npz/hanoi/full.npz
@@ -9,8 +9,8 @@ data:
 gpu: 0
 log_level: INFO
 model:
-  horizon: 1
-  input_dim: 2
+  horizon: 2
+  input_dim: 14
   l1_decay: 0
   output_dim: 1
   rnn_layers: 1
