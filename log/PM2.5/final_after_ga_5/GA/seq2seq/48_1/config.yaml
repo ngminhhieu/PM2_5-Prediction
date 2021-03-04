@@ -26,4 +26,4 @@ train:
   epochs: 300
   log_dir: log/PM2.5/final_after_ga_5/GA/seq2seq/48_1/
   optimizer: adam
-  patience: 10
+  patience: 15
