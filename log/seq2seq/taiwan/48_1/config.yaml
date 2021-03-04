@@ -26,4 +26,4 @@ train:
   epochs: 300
   log_dir: log/seq2seq/taiwan/48_1/
   optimizer: adadelta
-  patience: 10
+  patience: 15

@@ -26,4 +26,4 @@ train:
   epochs: 300
   log_dir: log/PM2.5/pc_0.8-pm_0.2-pop_30-gen_40-bestonly_True-percensplit_10-percenbacktest_60-split_True-fixed_True-shuffle_True/seq2seq/48_1/
   optimizer: adam
-  patience: 10
+  patience: 15
