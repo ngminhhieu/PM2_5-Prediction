@@ -40,7 +40,7 @@ def seed():
     # in the TensorFlow backend have a well-defined initial state.
     # For further details, see:
     # https://www.tensorflow.org/api_docs/python/tf/set_random_seed
-    tf.compat.v1.set_random_seed(1234)
+    tf.compat.v1.set_random_seed(12343)
 
 
 def str2bool(v):
@@ -145,5 +145,6 @@ if __name__ == '__main__':
         model = EncoderDecoder(is_training=False, **config)
         model.test()
         model.plot_series()
+        # model.get_inference_time_per_prediction()
     else:
         raise RuntimeError("Mode needs to be train/evaluate/test!")

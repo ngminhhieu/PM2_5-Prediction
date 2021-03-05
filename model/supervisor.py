@@ -282,3 +282,15 @@ class EncoderDecoder():
             plt.legend()
             plt.savefig(self._log_dir + '[result_predict]output_dim_{}.png'.format(str(i+1)))
             plt.close()
+
+    def get_inference_time_per_prediction(self):
+        data_test = self._data['test_data_norm'].copy()
+        T = len(data_test)
+        l = self._seq_len
+        for i in range(6):
+            h = i+1
+            number = int((T-l-h)/h)
+            dataset = pd.read_csv('./log/seq2seq/taiwan/48_{}/seq2seq_metrics.csv'.format(str(i+1)), header=None).to_numpy()
+            time = dataset[-1, -1]
+            average_time = time/number
+            print("seq2seq: ", str(i+1), ": ", average_time)
