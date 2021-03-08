@@ -10,7 +10,7 @@ gpu: 0
 log_level: INFO
 model:
   horizon: 1
-  input_dim: 5
+  input_dim: 6
   l1_decay: 0
   output_dim: 1
   rnn_layers: 1
@@ -25,5 +25,5 @@ train:
   dropout: 0
   epochs: 300
   log_dir: log/seq2seq/taiwan/48_1/
-  optimizer: adadelta
+  optimizer: adam
   patience: 15

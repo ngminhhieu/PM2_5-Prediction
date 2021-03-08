@@ -1,6 +1,5 @@
 import matplotlib
 import os
-import time
 import tensorflow.keras.callbacks as keras_callbacks
 import numpy as np
 import pandas as pd
@@ -160,7 +159,7 @@ class EncoderDecoder():
 
     def test(self):
         scaler = self._data['scaler']
-        start_time = start_time = time.time()
+        start_time = time.time()
         data_test = self._data['test_data_norm'].copy()
         # this is the meterogical data
         other_features_data = data_test[:, 0:(self._input_dim-self._output_dim)].copy()
@@ -287,10 +286,9 @@ class EncoderDecoder():
         data_test = self._data['test_data_norm'].copy()
         T = len(data_test)
         l = self._seq_len
-        for i in range(6):
-            h = i+1
-            number = int((T-l-h)/h)
-            dataset = pd.read_csv('./log/seq2seq/taiwan/48_{}/seq2seq_metrics.csv'.format(str(i+1)), header=None).to_numpy()
+        for i in range(1,7):
+            number = int((T-l-i)/i)
+            dataset = pd.read_csv('./log/seq2seq/X/48_{}/seq2seq_metrics.csv'.format(str(i)), header=None).to_numpy()
             time = dataset[-1, -1]
             average_time = time/number
-            print("seq2seq: ", str(i+1), ": ", average_time)
+            print("seq2seq: ", str(i), ": ", average_time)
