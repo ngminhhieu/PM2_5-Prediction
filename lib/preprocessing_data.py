@@ -13,7 +13,7 @@ def generate_npz(all_input_features, dataset, output_dir_npz, config_path, seq2s
 
 def set_config(all_input_features, config_path, output_dir_npz, seq2seq_path):
     if os.path.exists(config_path)==False:
-        copyfile("config/hanoi/ga_hanoi.yaml", config_path)
+        copyfile("config/hanoi/ga_hanoi_1.yaml", config_path)
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)    
     config['model']['input_dim'] = len(all_input_features)

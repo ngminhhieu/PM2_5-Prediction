@@ -41,7 +41,7 @@ class GA(object):
 
     def split_data(self):
         if self.split_training_data:
-            dataset = pd.read_csv('data/csv/hanoi_data_full.csv')
+            dataset = pd.read_csv('data/csv/hanoi.csv')
             pivot_split_train_test = int(0.8*(len(dataset)))
             dataset_train = dataset[0: pivot_split_train_test]
             dataset_train.to_csv('data/csv/ga/dataset_train.csv')
