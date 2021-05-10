@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import argparse
 import sys
 import numpy as np
@@ -40,7 +40,7 @@ def seed():
     # in the TensorFlow backend have a well-defined initial state.
     # For further details, see:
     # https://www.tensorflow.org/api_docs/python/tf/set_random_seed
-    tf.compat.v1.set_random_seed(12343)
+    tf.compat.v1.set_random_seed(12345)
 
 
 def str2bool(v):
@@ -127,7 +127,7 @@ if __name__ == '__main__':
                 input_features.append(constant.hanoi_features[index])
         preprocessing_data.generate_npz(
                     input_features + ['PM2.5'],
-                    'data/csv/hanoi_data_full.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(args.tmp)),
+                    'data/csv/hanoi.csv', "data/npz/hanoi/final_after_ga_{}.npz".format(str(args.tmp)),
                     'config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)), 'log/PM2.5/final_after_ga_{}/GA/seq2seq/'.format(str(args.tmp)))
         config = utils_ga.load_config('config/hanoi/final_after_ga_{}.yaml'.format(str(args.tmp)))
         model = EncoderDecoder(is_training=True, **config)
