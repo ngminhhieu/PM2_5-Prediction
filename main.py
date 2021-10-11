@@ -145,7 +145,6 @@ if __name__ == '__main__':
         model = EncoderDecoder(is_training=False, **config)
         model.test()
         model.plot_series()
-        X
         # model.get_inference_time_per_prediction()
     else:
         raise RuntimeError("Mode needs to be train/evaluate/test!")
