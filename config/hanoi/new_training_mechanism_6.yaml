@@ -2,7 +2,7 @@ alg: seq2seq
 base_dir: log/new_training_mechanism/
 data:
   batch_size: 200
-  dataset: data/npz/new_training_mechanism/hanoi.npz
+  dataset: data/npz/new_training_mechanism/hanoi2.npz
   test_batch_size: 1
   test_size: 0.2
   valid_size: 0.2
@@ -10,7 +10,7 @@ gpu: 0
 log_level: INFO
 model:
   horizon: 6
-  input_dim: 3
+  input_dim: 6
   l1_decay: 0
   output_dim: 1
   rnn_layers: 1
